@@ -1,7 +1,8 @@
-from App.Photo2Text import *
-from App.SplitPhoto import *
-from App.Text2Url import *
-from App.Url2Music import *
+from App.Tasks.Photo2Text import *
+from App.Tasks.SplitPhoto import *
+from App.Tasks.Text2Url import *
+from App.Tasks.Url2Music import *
+from App.Tasks.CheckMusic import *
 from Configs.configs import *
 class Flow():
     def __init__(self):
@@ -22,3 +23,4 @@ class Flow():
         # Photo2Text(self.SPLITED_PHOTO_DIR,self.p2t_pkl_file).run()
         # Text2Url(self.URL_DIR,self.p2t_pkl_file,self.t2u_pkl_file).run()
         Url2Music(self.MUSIC_DIR,self.t2u_pkl_file,self.u2m_pkl_file).run()
+        CheckMusic(self.MUSIC_DIR,self.t2u_pkl_file,self.u2m_pkl_file).run()
