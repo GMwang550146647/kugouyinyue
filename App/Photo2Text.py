@@ -1,11 +1,8 @@
-import time
 import pickle
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from lxml import etree
 import time
 from multiprocessing import Manager
-import pandas as pd
+
 from utils.utils import *
 from utils.parallel_computing import *
 from Configs.configs import *
@@ -13,7 +10,7 @@ from Configs.configs import *
 
 class Photo2Text():
 
-    def __init__(self, photo_dir,p2t_pkl_file):
+    def __init__(self, photo_dir, p2t_pkl_file):
         self.record_dict = {}
         self.pkl_file = p2t_pkl_file
         self.all_photo_files = get_all_pattern_files(photo_dir, '\.jpg')
@@ -73,11 +70,11 @@ class Photo2Text():
         return driver
 
     def photo2text(self, cmd):
-        get_driver=None
+        get_driver = None
         if cmd == 'fire_fox':
             get_driver = self.get_fox_driver
         elif cmd == 'chrome':
-            get_driver =self.get_chrome_driver
+            get_driver = self.get_chrome_driver
         elif cmd == 'safari':
             get_driver = self.get_safari_driver
         else:
@@ -86,7 +83,6 @@ class Photo2Text():
                 self.save_data()
             time.sleep(2)
             self.save_data()
-
 
         url = "https://catocr.com/#/"
         while get_driver:
@@ -111,7 +107,7 @@ class Photo2Text():
                 if num_output >= 5:
                     driver.close()
                     break
-            if self.queue.qsize()==0:
+            if self.queue.qsize() == 0:
                 break
 
     def save_data(self):
@@ -123,6 +119,6 @@ class Photo2Text():
         print(f"Saved! -> {self.record_dict}")
 
     def run(self):
-        funcs = ['fire_fox','chrome','safari','save_data']
+        funcs = ['fire_fox', 'chrome', 'safari', 'save_data']
         MultiProcess.multi_process(self.photo2text, funcs)
         return self.record_dict
